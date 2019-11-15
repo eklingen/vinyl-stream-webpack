@@ -98,7 +98,7 @@ function webpackWrapper (options = {}) {
     })
 
     // Run webpack
-    compiler.run((error, stats) => runCallback(error, stats, callback, compiler))
+    return compiler.run((error, stats) => runCallback(error, stats, callback, compiler))
   }
 
   return new Transform({ transform, flush, readableObjectMode: true, writableObjectMode: true })
