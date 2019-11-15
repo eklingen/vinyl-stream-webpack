@@ -38,7 +38,7 @@ function webpackWrapper (options = {}) {
     const warnings = jsonStats.warnings || []
 
     if (stats.hasErrors() || errors.length) {
-      return callback(new Error(errors.join('\n')))
+      return callback(new Error(errors[0].message ? errors[0].message.split('   at ')[0] : errors))
     }
 
     if (stats.hasWarnings() || warnings.length) {
