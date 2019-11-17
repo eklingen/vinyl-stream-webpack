@@ -81,8 +81,7 @@ function webpackWrapper (options = {}) {
     }
 
     const compiler = webpack(options.config)
-
-    function onEmitAsync (compilation, cb) {
+    const onEmitAsync = (compilation, cb) => {
       // Push files back into the stream, if the compilation doesn't have errors and the files have contents
       if (!compilation.errors.length) {
         Object.entries(compilation.assets).filter(asset => asset[1].size()).forEach(asset => {
