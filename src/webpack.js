@@ -82,20 +82,22 @@ function webpackWrapper (options = {}) {
 
     const compiler = webpack(options.config)
 
-    // For every compiler, after compilation succeeds, push the file(s) back into the stream
-    compiler.compilers.forEach(compiler => {
-      compiler.hooks.emit.tapAsync('vinyl-stream-webpack', (compilation, cb) => {
-        // Push files back into the stream, if the compilation doesn't have errors and the files have contents
-        if (!compilation.errors.length) {
-          Object.entries(compilation.assets).filter(asset => asset[1].size()).forEach(asset => {
-            this.push(new Vinyl({ base: compilation.options.output.path, path: join(compilation.options.output.path, asset[0]), contents: asset[1].buffer() }))
-          })
-        }
+    function onEmitAsync (compilation, cb) {
+      // Push files back into the stream, if the compilation doesn't have errors and the files have contents
+      if (!compilation.errors.length) {
+        Object.entries(compilation.assets).filter(asset => asset[1].size()).forEach(asset => {
+          this.push(new Vinyl({ base: compilation.options.output.path, path: join(compilation.options.output.path, asset[0]), contents: asset[1].buffer() }))
+        })
+      }
 
-        compilation.assets = [] // Throw away the existing assets so Webpack won't write them to disk
-        cb()
-      })
-    })
+      // Throw away the existing assets so Webpack won't write them to disk
+      compilation.assets = []
+
+      cb()
+    }
+
+    // For every compiler, fire the asyncEmit hook
+    compiler.compilers.forEach(compiler => compiler.hooks.emit.tapAsync('vinyl-stream-webpack', (compilation, cb) => onEmitAsync(compilation, cb)))
 
     // Run webpack
     return compiler.run((error, stats) => runCallback(error, stats, callback, compiler))
