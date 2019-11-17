@@ -22,7 +22,6 @@ const FIXED_OPTIONS = {
 function webpackWrapper (options = {}) {
   const webpack = require('webpack')
   const Vinyl = require('vinyl')
-  const memfs = require('memfs')
 
   options = { ...DEFAULT_OPTIONS, ...options, ...FIXED_OPTIONS }
 
@@ -33,21 +32,23 @@ function webpackWrapper (options = {}) {
       return callback(new Error(error))
     }
 
-    const jsonStats = stats.toJson()
-    const errors = jsonStats.errors || []
-    const warnings = jsonStats.warnings || []
+    if (stats) {
+      const jsonStats = stats.toJson()
+      const errors = jsonStats.errors || []
+      const warnings = jsonStats.warnings || []
 
-    if (stats.hasErrors() || errors.length) {
-      return callback(new Error(errors[0].message ? errors[0].message.split('   at ')[0] : errors))
-    }
+      if (stats.hasErrors() || errors.length) {
+        return callback(errors[0].message.split('   at ')[0]) // Remove the stack trace from the error
+      }
 
-    if (stats.hasWarnings() || warnings.length) {
-      console.log(warnings.join('\n'))
-    }
+      if (stats.hasWarnings() || warnings.length) {
+        console.log(warnings.join('\n'))
+      }
 
-    if (options.stats) {
-      const statsObject = typeof options.stats === 'object' ? options.stats : {}
-      console.log(stats.toString({ ...statsObject, colors: true }))
+      if (options.stats) {
+        const statsObject = typeof options.stats === 'object' ? options.stats : {}
+        console.log(stats.toString({ ...statsObject, colors: true }))
+      }
     }
 
     compiler.close(() => {}) // Webpack v5
@@ -83,16 +84,15 @@ function webpackWrapper (options = {}) {
 
     // For every compiler, after compilation succeeds, push the file(s) back into the stream
     compiler.compilers.forEach(compiler => {
-      compiler.outputFileSystem = memfs
-      compiler.hooks.afterEmit.tapAsync('vinyl-stream-webpack', (compilation, cb) => {
-        memfs.readdirSync(compiler.outputPath).forEach(outname => {
-          this.push(new Vinyl({
-            base: compiler.outputPath,
-            path: join(compiler.outputPath, outname),
-            contents: memfs.readFileSync(join(compiler.outputPath, outname))
-          }))
-        })
+      compiler.hooks.emit.tapAsync('vinyl-stream-webpack', (compilation, cb) => {
+        // Push files back into the stream, if the compilation doesn't have errors and the files have contents
+        if (!compilation.errors.length) {
+          Object.entries(compilation.assets).filter(asset => asset[1].size()).forEach(asset => {
+            this.push(new Vinyl({ base: compilation.options.output.path, path: join(compilation.options.output.path, asset[0]), contents: asset[1].buffer() }))
+          })
+        }
 
+        compilation.assets = [] // Throw away the existing assets so Webpack won't write them to disk
         cb()
       })
     })
