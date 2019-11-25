@@ -83,7 +83,9 @@ function webpackWrapper (options = {}) {
     const compiler = webpack(options.config)
     const onEmitAsync = (compilation, cb) => {
       // Push files back into the stream, if the compilation doesn't have errors and the files have contents
-      if (!compilation.errors.length) {
+      if (compilation.errors.length) {
+        return cb(compilation.errors)
+      } else {
         Object.entries(compilation.assets).filter(asset => asset[1].size()).forEach(asset => {
           this.push(new Vinyl({ base: compilation.options.output.path, path: join(compilation.options.output.path, asset[0]), contents: asset[1].buffer() }))
         })

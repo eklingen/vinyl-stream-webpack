@@ -1,6 +1,7 @@
 
 # Changelog
 
+v1.0.8 - Fixed issue where errors were sometimes swallowed
 v1.0.7 - Internal refactoring
 v1.0.6 - Upgraded `webpack` dependency
 v1.0.5 - Bugfix
