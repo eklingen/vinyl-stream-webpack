@@ -1,5 +1,5 @@
 
-# Small vinyl-stream wrapper -aka Gulp plugin- for webpack.
+# Small vinyl-stream wrapper -aka Gulp plugin- for webpack
 
 Run webpack within your streams. *Compatible with Webpack v5*.
 
@@ -13,7 +13,7 @@ Supports multi-compilations. Gets entry points from the Vinyl stream. Does not s
 
 ## Usage
 
-```
+```javascript
 const webpackWrapper = require('@eklingen/vinyl-stream-webpack')
 stream.pipe(webpackWrapper())
 ```
@@ -28,7 +28,7 @@ There are a few options:
 
 Use this to pass in a configuration object.
 
-```
+```javascript
 webpackWrapper({
   config: { ... }
 })
@@ -38,7 +38,7 @@ webpackWrapper({
 
 Set this option to log verbose stats to the terminal. If falsey, then this plugin will be quiet.
 
-```
+```javascript
 webpackWrapper({
   logStats: true
 })
