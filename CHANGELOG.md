@@ -1,6 +1,8 @@
 
 # Changelog
 
+v1.1.2 - Upgrade dependencies
+v1.1.1 - Upgrade dependencies
 v1.1.0 - First release with a tag
 v1.0.8 - Fixed issue where errors were sometimes swallowed
 v1.0.7 - Internal refactoring
