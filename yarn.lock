@@ -1570,7 +1570,7 @@ webpack-sources@^1.4.3:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack@^5.0.0-beta.11:
+webpack@^5.0.0-beta.13:
   version "5.0.0-beta.13"
   resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.0.0-beta.13.tgz#be352c63ffc9db54c2ab943d0e454842a469d6e6"
   integrity sha512-KQS3+zFZwnDpEj8QRaPbbXKP6N/eg4VDpwqQsZJfKE4QMy8zPhTBPQwozGWpHf3g7JMSpsLojBrOzm9HJSMBJA==
