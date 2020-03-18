@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "vinyl": "^2.2.0",
-    "webpack": "^5.0.0-beta.13"
+    "webpack": "^5.0.0-beta.14"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
