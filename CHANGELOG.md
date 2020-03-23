@@ -1,7 +1,7 @@
 
 # Changelog
 
-v1.1.6 - Bump acorn from 7.1.0 to 7.1.1
+v1.1.6 - Upgrade dependencies
 v1.1.5 - Upgrade dependencies
 v1.1.4 - Upgrade dependencies
 v1.1.3 - Updated development node version to 12.16.0
