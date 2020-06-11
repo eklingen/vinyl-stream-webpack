@@ -1,6 +1,7 @@
 
 # Changelog
 
+v1.1.7 - Upgrade dependencies
 v1.1.6 - Upgrade dependencies
 v1.1.5 - Upgrade dependencies
 v1.1.4 - Upgrade dependencies
