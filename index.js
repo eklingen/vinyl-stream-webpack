@@ -42,7 +42,7 @@ function webpackWrapper (options = {}) {
       }
 
       if (stats.hasWarnings() || warnings.length) {
-        console.log(warnings.join('\n'))
+        console.log('Warning:', warnings[0].message.split('   at ')[0]) // Remove the stack trace from the warning
       }
 
       if (options.stats) {
