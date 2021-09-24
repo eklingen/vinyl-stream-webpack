@@ -1,6 +1,7 @@
 
 # Changelog
 
+v2.0.0 - Upgrade node to v14 LTS
 v1.1.9 - Fixed incorrect warnings log
 v1.1.8 - Upgrade dependencies
 v1.1.7 - Upgrade dependencies
