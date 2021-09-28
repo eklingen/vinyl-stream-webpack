@@ -80,7 +80,13 @@ function webpackWrapper (options = {}) {
       config.output = { ...config.output, path: process.cwd() }
     }
 
-    const compiler = webpack(options.config)
+    let compiler
+    try {
+      compiler = webpack(options.config)
+    } catch (e) {
+      return callback(e)
+    }
+
     const onEmitAsync = (compilation, cb) => {
       // Push files back into the stream, if the compilation doesn't have errors and the files have contents
       if (compilation.errors.length) {

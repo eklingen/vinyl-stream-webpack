@@ -1,6 +1,7 @@
 
 # Changelog
 
+v2.0.2 - Fix swallowed Webpack error
 v2.0.1 - Upgrade dependencies
 v2.0.0 - Upgrade node to v14 LTS
 v1.1.9 - Fixed incorrect warnings log
