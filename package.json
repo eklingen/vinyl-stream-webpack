@@ -29,8 +29,8 @@
     "test": "echo '** TODO: Write tests! **'; echo 'Linting...'; eslint index.js --fix;"
   },
   "dependencies": {
-    "vinyl": "^2.2.1",
-    "webpack": "5.73.0"
+    "vinyl": "^3.0.0",
+    "webpack": "5.83.1"
   },
   "devDependencies": {
     "eslint": "^8.17.0",
