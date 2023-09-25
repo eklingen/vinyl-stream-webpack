@@ -1,6 +1,7 @@
 
 # Changelog
 
+v2.0.5 - Unpinned webpack version
 v2.0.4 - Upgrade dependencies
 v2.0.3 - Upgrade dependencies
 v2.0.2 - Fix swallowed Webpack error
