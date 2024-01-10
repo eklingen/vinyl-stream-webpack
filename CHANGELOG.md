@@ -1,6 +1,7 @@
 
 # Changelog
 
+v2.0.7 - Bumped webpack dependency
 v2.0.6 - DevEnv changes
 v2.0.5 - Unpinned webpack version
 v2.0.4 - Upgrade dependencies

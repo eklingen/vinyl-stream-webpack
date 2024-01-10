@@ -31,6 +31,6 @@
   },
   "dependencies": {
     "vinyl": "^3.0.0",
-    "webpack": "^5.83.1"
+    "webpack": "^5.89.0"
   }
 }
