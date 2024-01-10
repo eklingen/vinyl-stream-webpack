@@ -10,16 +10,16 @@ const { Transform } = require('stream')
 
 const DEFAULT_OPTIONS = {
   config: {},
-  logStats: true
+  logStats: true,
 }
 
 const FIXED_OPTIONS = {
   entry: {},
   watch: false,
-  devServer: {}
+  devServer: {},
 }
 
-function webpackWrapper (options = {}) {
+function webpackWrapper(options = {}) {
   const webpack = require('webpack')
   const Vinyl = require('vinyl')
 
@@ -27,7 +27,7 @@ function webpackWrapper (options = {}) {
 
   const entries = {}
 
-  function runCallback (error, stats, callback, compiler) {
+  function runCallback(error, stats, callback, compiler) {
     if (error) {
       return callback(new Error(error))
     }
@@ -56,7 +56,7 @@ function webpackWrapper (options = {}) {
     return callback()
   }
 
-  function transform (file, encoding, callback) {
+  function transform(file, encoding, callback) {
     if (!file.isBuffer() || !file.contents || !file.contents.length) {
       return
     }
@@ -68,7 +68,7 @@ function webpackWrapper (options = {}) {
     return callback()
   }
 
-  function flush (callback) {
+  function flush(callback) {
     // If config is an object, wrap it in an array. We assume a multi-compilation setup from here on out.
     if (!Array.isArray(options.config)) {
       options.config = [options.config]
@@ -92,9 +92,11 @@ function webpackWrapper (options = {}) {
       if (compilation.errors.length) {
         return cb(compilation.errors)
       } else {
-        Object.entries(compilation.assets).filter(asset => asset[1].size()).forEach(asset => {
-          this.push(new Vinyl({ base: compilation.options.output.path, path: join(compilation.options.output.path, asset[0]), contents: asset[1].buffer() }))
-        })
+        Object.entries(compilation.assets)
+          .filter(asset => asset[1].size())
+          .forEach(asset => {
+            this.push(new Vinyl({ base: compilation.options.output.path, path: join(compilation.options.output.path, asset[0]), contents: asset[1].buffer() }))
+          })
       }
 
       // Throw away the existing assets so Webpack won't write them to disk
